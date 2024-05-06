@@ -1,0 +1,18 @@
+.right{
+    @apply basis-1/3 flex sm:bg-[#fcf5f3] bg-transparent justify-end items-center gap-10;
+    .user{
+        @apply flex gap-2 items-center p-2;
+        img{
+            @apply w-[20px] h-[20px] rounded-full object-cover
+        }
+        span{
+            @apply text-[0.8rem]
+        }
+        .linkUser {
+            @apply  px-4 py-2 bg-orange-200 border text-[0.8rem] cursor-pointer relative;
+            .notification{
+                @apply absolute flex w-[25px] h-[25px] bg-red-600 rounded-full p-1 text-white items-center justify-center  top-[-8px] right-[-8px];
+            }
+        }
+    }
+}

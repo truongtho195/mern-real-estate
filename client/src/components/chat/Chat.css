@@ -1,0 +1,77 @@
+.chat{
+    @apply flex flex-col h-[100%];
+    h1{
+        @apply text-gray-500 text-lg
+    }
+    .messages{
+        @apply flex flex-1 flex-col gap-2 overflow-y-scroll;
+        .message{
+                @apply flex gap-2 items-center bg-white p-2 hover:bg-slate-100 cursor-pointer rounded-md;
+            
+                span{
+                    @apply font-bold text-sm;
+                }
+                img{
+                    @apply w-[26px] h-[26px] rounded-full object-cover;
+                }
+                .deleteButton{
+                    @apply invisible;
+                }
+                &:hover .deleteButton{
+                    @apply visible scale-100;
+                }
+            
+            
+                /* .deleteButton{
+                    @apply invisible;
+                } */
+                /* .group-hover
+                {.item{
+                    @apply visible;
+                }} */
+            }
+        }
+ 
+
+    .chatBox{
+        @apply flex-1 bg-white flex flex-col justify-between;
+        .top{
+            @apply flex justify-between items-center bg-[#fff6dc] h-[50px];
+            .user{
+                @apply flex gap-2 font-bold px-4;
+                img{
+                    @apply w-[26px] h-[26px] rounded-full object-cover;
+                }
+            }
+            .close{
+                @apply cursor-pointer
+            }
+        }
+        .center{
+            @apply flex flex-col px-4 h-[350px] overflow-scroll;
+            .chatMessage{
+                @apply text-sm w-[50%] ;
+                span{
+                    @apply bg-[#fff6dc] w-[max-content] text-[0.7rem] p-1 rounded-sm;
+                }
+                &.own{
+                    @apply self-end text-end;
+                }
+            }
+            
+            
+            
+        
+        }
+        .bottom{
+            @apply h-[60px] border-t-[2px] border-[#f7c14b85] flex items-center justify-between;
+            textarea{
+                @apply flex-grow h-[100%];
+            }
+            button{
+                @apply w-[90px] h-[100%] bg-[#f7c14b85] ;
+            }
+        }
+    }
+
+}  

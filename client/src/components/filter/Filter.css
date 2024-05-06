@@ -1,0 +1,32 @@
+.filter{
+    @apply flex flex-col gap-1;
+    h1{
+        @apply text-xl text-gray-300
+    };
+    .item{
+        @apply flex flex-col gap-1;
+        label{
+            @apply text-sm;
+        }
+        input,
+        select{
+            @apply w-[100px] p-2 border border-[#e0e0e0] rounded-md text-sm;
+        }
+    };
+    .top{
+        input{
+            @apply w-[100%];
+        }
+    };
+    .bottom{
+        @apply flex justify-between gap-5;
+        button{
+            @apply border-0 bg-yellow-400 cursor-pointer bg-center p-3 w-[100px] h-[100%] flex justify-center items-center;
+            img{
+                @apply w-[24px] h-[24px] ;
+            }
+        }
+    }
+    
+
+}

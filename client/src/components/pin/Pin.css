@@ -1,0 +1,9 @@
+.popupContainer{
+    @apply flex gap-2;
+    img{
+        @apply w-[64px] h-[48px] object-cover rounded-[5px]
+    }
+    .textContainer{
+        @apply flex flex-col justify-between;
+    }
+}

@@ -1,0 +1,14 @@
+.feature{
+    @apply flex gap-2;
+    img{
+        @apply w-[20px] h-[20px] items-center justify-center self-center text-xl;
+    }
+    .featureText{
+        span{
+            @apply font-bold text-[0.8rem];
+        }
+        p{
+            @apply text-[0.75rem];
+        }
+    }
+}

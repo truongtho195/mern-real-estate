@@ -1,0 +1,9 @@
+.layout{
+    @apply container mx-auto flex flex-col;
+    .navbar{
+
+    }
+    .content{
+        @apply  h-[calc(100vh-10px)]
+    }
+}

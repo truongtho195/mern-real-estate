@@ -1,0 +1,51 @@
+.card{
+    @apply flex gap-3;
+    
+    .imageContainer{
+        @apply flex basis-1/4 h-[200px] ;
+        img{
+            @apply object-cover rounded-[10px];
+        }
+    }
+    .textContainer{
+        
+        @apply flex flex-col basis-3/4 justify-between;
+        
+        img{
+            @apply w-[16px] h-[16px]
+        }
+        .title{
+            @apply text-[20px] font-[600] text-gray-600 hover:text-black hover:scale-[1.01]
+        }
+        .address{
+            @apply flex gap-1 items-center text-gray-300;
+        }
+        .price{
+            @apply bg-[rgba(254,205,81,0.438)] font-[300] p-[5px] rounded-[5px] w-[max-content];
+        }
+        .bottom{
+            @apply flex items-center justify-between;
+        }
+        .features{
+            @apply flex w-[100%] gap-4 ;
+            .feature{
+                @apply flex flex-row gap-2 items-center bg-gray-100 p-1 rounded-md;
+                img{
+                    @apply w-5
+                }
+                span{
+                    @apply flex text-sm;
+                }
+            }
+            
+        }
+        .icons{
+            @apply flex flex-row gap-2;
+            .icon{
+                @apply border border-[#999] rounded-md px-[5px] py-[2px] cursor-pointer hover:bg-gray-200
+            }
+        }
+    }
+    
+    
+}

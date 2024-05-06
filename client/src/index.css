@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+h2{
+  @apply text-sm text-gray-400;
+}
+.check-responsive{
+  /* @apply md:bg-blue-500 bg-green-300  lg:bg-orange-500 */
+}
+.form-input {
+  @apply 
+  w-auto
+  p-4
+  border 
+  border-gray-500
+  lg:py-0
+  lg:border-none
+  lg:px-[5px] 
+  lg:w-auto
+  lg:flex-1
+  lg:[&:nth-child(2)]:w-[150px] 
+  lg:[&:nth-child(2)]:flex-none
+  lg:[&:nth-child(3)]:w-[150px]
+  lg:[&:nth-child(3)]:flex-none
+  md:w-auto
+  md:border-gray-500
+  md:[&:nth-child(2)]:w-auto
+  md:[&:nth-child(3)]:w-auto
+  
+
+
+}
+
+
+

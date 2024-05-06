@@ -1,0 +1,39 @@
+.slider{
+    @apply flex gap-1 h-[350px] pt-5;
+    .bigImage{
+        @apply basis-5/6;
+        img{
+            @apply object-cover h-full w-full rounded-lg shadow
+        }
+    }
+    .smallImages{
+        @apply  flex flex-col basis-1/6 gap-2 justify-between cursor-pointer;
+        img{
+            @apply object-cover h-[100px] rounded-lg shadow
+        }
+    }
+
+    .fullSlider{
+        @apply absolute w-[100vw] h-[100vh] top-0 left-0 bg-black flex items-center justify-between gap-5 p-[50px];        
+        .arrow{
+            @apply flex cursor-pointer items-center justify-center;
+            img{
+                @apply w-[50px] ;
+                &.rightArrow{
+                    transform: rotate(180deg);
+                }
+            }
+        }
+        .imgContainer{
+            @apply flex basis-10/12;
+
+            img{
+                @apply w-[100%] h-[100%] object-cover rounded-md
+            }
+        }
+        .close{
+            @apply absolute top-0 right-0 text-white font-bold text-[36px] cursor-pointer p-[50px]
+        }
+
+    }
+}
