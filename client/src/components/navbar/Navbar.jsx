@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Logo from "../../assets/images/logo.png";
 import { Link } from "react-router-dom";
 import { userData } from "../../lib/dummydata.js";
 import "./Navbar.css";
+import { AuthContext } from "../../context/AuthContext.jsx";
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
+    // const [currentUser] = useContext(AuthContext)
     const user = userData;
     return (
         <nav>
@@ -28,13 +30,13 @@ export default function Navbar() {
                 <div className="right">
                     {user ? (
                         <div className="user">
-                            <img src={user.img} alt="" />
-                            <span>{user.name}</span>
+                            <img src={user.avatar} alt="" />
+                            <span>{user.username}</span>
                             <Link className="linkUser" to="/profile">
                                 <span className="notification"> 3</span>
                                 Profile
                             </Link>
-                            
+
                         </div>
                     ) : (
                         <>

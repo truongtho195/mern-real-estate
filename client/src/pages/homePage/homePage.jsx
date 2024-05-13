@@ -1,10 +1,11 @@
 import React, { useContext } from 'react'
-import bg from '../assets/images/bg.png'
-import SearchBar from '../../components/searchBar/SearchBar'
+import bg from './../../assets/images/bg.png'
+import SearchBar from './../../components/searchBar/SearchBar.jsx'
 import "./homePage.css"
-import { AuthContext } from '../../context/AuthContext'
+import { AuthContext } from './../../context/AuthContext'
 export default function HomePage() {
     const {currentUser} = useContext(AuthContext);
+    // console.log(currentUser);
     return (
         <div className='flex check-responsive'>
             <div className='text-container lg:basis-2/3'>
@@ -13,9 +14,10 @@ export default function HomePage() {
                         Find Real Estate & Get Your Dream Place</h1>
                     <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis error quae, inventore quaerat repudiandae quo commodi quisquam maxime, eius sint qui ex sequi culpa expedita molestiae corporis accusantium vitae at.</p>
                     <SearchBar />
+                    {currentUser.username}
                     <div className='boxes text-xl font-semibold justify-between hidden'>
                         <div className='box'>
-                            <h1>16+</h1>
+                            <h1>16+ </h1>
                             <h2>Years of Experience</h2>
                         </div>
                         <div className='box'>

@@ -1,16 +1,16 @@
-import {React,useState} from 'react'
+import {useContext,useState} from 'react'
 import "./ProfilePage.css"
 import { useNavigate } from 'react-router-dom';
-import { userData } from "../../lib/dummydata.js";
+import { userData,listData } from "../../lib/dummydata.js";
 import CardItem from '../../components/cardItem/CardItem.jsx'
-import { listData } from "../../lib/dummydata.js"
 import Chat from "../../components/chat/Chat.jsx";
-import apiRequest from '../../lib/apiRequest.js';
-const ProfilePage = () => {
+import apiRequest from './../../lib/apiRequest.js';
+import  AuthContext from './../../context/AuthContext.jsx';
+function ProfilePage  () {
   const [error,setError] = useState("");
+  const [updateUser] = useContext(AuthContext);
   const navigate = useNavigate();
-
-  
+    
   const user = userData;
   const logoutHandle= async ()=>{
     try {
@@ -18,6 +18,7 @@ const ProfilePage = () => {
       localStorage.removeItem("user");
       
       const res =  await apiRequest.post("/auth/logout");
+      updateUser(null);
       navigate("/")
     } catch (error) {
       console.log(error)
