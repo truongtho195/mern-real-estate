@@ -70,7 +70,7 @@ const Chat = () => {
                             <span>1 hour ago</span>
                         </div>
                         <div className="chatMessage own">
-                            <p className='textMessage'>Lorem ipsum dolor sit amet</p>
+                            <p className='textMessage'>Lorem ssipsum dolor sit amet</p>
                             <span>1 hour ago</span>
                         </div>
                         <div className="chatMessage">

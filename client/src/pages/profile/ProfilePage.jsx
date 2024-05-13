@@ -1,11 +1,29 @@
-import React from 'react'
+import {React,useState} from 'react'
 import "./ProfilePage.css"
+import { useNavigate } from 'react-router-dom';
 import { userData } from "../../lib/dummydata.js";
 import CardItem from '../../components/cardItem/CardItem.jsx'
 import { listData } from "../../lib/dummydata.js"
 import Chat from "../../components/chat/Chat.jsx";
+import apiRequest from '../../lib/apiRequest.js';
 const ProfilePage = () => {
+  const [error,setError] = useState("");
+  const navigate = useNavigate();
+
+  
   const user = userData;
+  const logoutHandle= async ()=>{
+    try {
+      setError("");
+      localStorage.removeItem("user");
+      
+      const res =  await apiRequest.post("/auth/logout");
+      navigate("/")
+    } catch (error) {
+      console.log(error)
+      setError(error)
+    }
+  }
   return (
     <div className="profilePage">
       <div className="details">
@@ -18,6 +36,7 @@ const ProfilePage = () => {
             <span>Avatar : <img src={user.img} alt="" /></span>
             <span>Username : <b>{user.name}</b></span>
             <span>Email : <b>{user.email}</b></span>
+            <button className='btnLogout' onClick={logoutHandle}>Logout</button>
           </div>
 
           <div className="title">

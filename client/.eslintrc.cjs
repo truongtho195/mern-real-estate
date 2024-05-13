@@ -10,10 +10,12 @@ module.exports = {
   ignorePatterns: ['dist', '.eslintrc.cjs'],
   parserOptions: { ecmaVersion: 'latest', sourceType: 'module' },
   settings: { react: { version: '18.2' } },
-  plugins: ['react-refresh'],
+  plugins: ['react-refresh',  "react-hooks"],
   rules: {
     "no-unused-vars": "warn",
     'react/jsx-no-target-blank': 'off',
+    "react-hooks/rules-of-hooks": "warn", // Checks rules of Hooks
+    "react-hooks/exhaustive-deps": "warn", // Checks effect dependencies
     'react-refresh/only-export-components': [
       'warn',
       { allowConstantExport: true },

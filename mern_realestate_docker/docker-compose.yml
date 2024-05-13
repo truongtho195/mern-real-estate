@@ -1,0 +1,147 @@
+version: '3.8'
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: realestate_mongodb
+    restart: always
+    ports:
+      - "27020:27017"
+    volumes:
+      - ./mongodb_data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_DATABASE: mern_realestate_db   # Tên của cơ sở dữ liệu sẽ được tạo
+
+volumes:
+  mongodb_data:
+    driver: local
+
+
+# services:
+#   mongo:
+#     build: 
+#       context: ./mongodb_rs
+#       args:
+#         MONGO_VERSION: 6
+#     container_name: mongo
+#     restart: always
+#     ports:
+#       - "27017:27017"
+#     volumes:
+#       - ./mongodb_data:/data/db
+#     environment:
+#       MONGO_INITDB_ROOT_USERNAME: root
+#       MONGO_INITDB_ROOT_PASSWORD: example
+#       MONGO_INITDB_DATABASE: mern_realestate_db   # Tên của cơ sở dữ liệu sẽ được tạo
+#       MONGO_REPLICA_HOST: mongo
+#       MONGO_REPLICA_PORT: 27017
+#       # Use "mongo" instead of "mongosh" before v5.0
+#       MONGO_COMMAND: 'mongosh'
+#     # healthcheck:
+#     #   # Use "mongo" instead of "mongosh" before v5.0
+#     #     test: ['CMD', 'mongosh', 'admin', '--port', '27019', '--eval', "db.adminCommand('ping').ok"]
+#     #     interval: 5s
+#     #     timeout: 2s
+#     #     retries: 20
+# volumes:
+#   mongodb_data:
+#     driver: local
+
+
+# services:
+#   mongo1:
+#     image: mongo
+#     container_name: mongo1
+#     ports:
+#       - "27017:27017"
+#     command: mongod --replSet "rs0"
+#     environment:
+#       MONGO_INITDB_REPLICASET: rs0
+#       MONGO_INITDB_ROOT_USERNAME: root
+#       MONGO_INITDB_ROOT_PASSWORD: example
+#       MONGO_INITDB_DATABASE: mern_realestate_db
+#     restart: always
+#     volumes:
+#       - ./mongodb/primary:/data/db
+#     networks:
+#       - mongo_replica
+    
+
+#   mongo2:
+#     image: mongo
+#     container_name: mongo2
+#     ports:
+#       - "27018:27017"
+#     command: mongod --replSet "rs0"
+#     environment:
+#       MONGO_INITDB_ROOT_USERNAME: root
+#       MONGO_INITDB_ROOT_PASSWORD: example
+#       MONGO_INITDB_DATABASE: mern_realestate_db
+#     restart: always
+#     volumes:
+#       - ./mongodb/secondary1:/data/db
+#     networks:
+#       - mongo_replica
+    
+
+#   mongo3:
+#     image: mongo
+#     container_name: mongo3
+#     ports:
+#       - "27019:27017"
+#     command: mongod --replSet "rs0"
+#     environment:
+#       MONGO_INITDB_ROOT_USERNAME: root
+#       MONGO_INITDB_ROOT_PASSWORD: example
+#       MONGO_INITDB_DATABASE: mern_realestate_db
+#     restart: always
+#     volumes:
+#       - ./mongodb/primary2:/data/db
+#     networks:
+#       - mongo_replica
+
+# volumes:
+#   mongo1:
+#   mongo2:
+#   mongo3:
+
+
+# networks:
+#   mongo_replica:
+#     driver: bridge
+  # nodejs:
+  #   image: node:14
+  #   container_name: nodejs_container
+  #   # Add your Node.js application setup here
+  #   # For example, you can mount your Node.js app code to the container
+  #   volumes:
+  #     - ./app:/app
+  #   command: "npm start"  # Example command to start your Node.js application
+  #   depends_on:
+  #     - mongo1
+  #     - mongo2
+  #     - mongo3
+
+
+
+# # Use root/example as user/password credentials
+# version: '3.7'
+
+# services:
+#   mongodb:
+#     image: mongo:latest
+#     container_name: realestate_mongodb
+#     restart: always
+#     ports:
+#       - "27020:27017"
+#     volumes:
+#       - mongodb_data:/data/db
+#     environment:
+#       MONGO_INITDB_ROOT_USERNAME: root
+#       MONGO_INITDB_ROOT_PASSWORD: example
+#       MONGO_INITDB_DATABASE: mern_realestate_db   # Tên của cơ sở dữ liệu sẽ được tạo
+
+# volumes:
+#   mongodb_data:
+#     driver: local
