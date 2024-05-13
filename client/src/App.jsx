@@ -10,8 +10,6 @@ import LoginPage from './pages/loginPage/loginPage.jsx';
 import {createBrowserRouter,RouterProvider,} from 'react-router-dom';
 
 function App() {
-  
-
   const router = createBrowserRouter([
     {
       path:"/",
