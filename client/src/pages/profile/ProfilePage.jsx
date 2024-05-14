@@ -1,4 +1,4 @@
-import {useContext,useState} from 'react'
+import {useContext,useEffect,useState} from 'react'
 import "./ProfilePage.css"
 import { useNavigate } from 'react-router-dom';
 import { userData,listData } from "../../lib/dummydata.js";
@@ -14,6 +14,15 @@ function ProfilePage  () {
   const navigate = useNavigate();
     
   const user = currentUser;
+  console.log('Current user');
+  console.log(currentUser);
+  useEffect(()=>{
+    if(!currentUser)
+      {
+        navigate("/login")
+      }
+  },[user,navigate]);
+
   const logoutHandle= async ()=>{
     try {
       setError("");
@@ -28,7 +37,7 @@ function ProfilePage  () {
     }
   }
   return (
-    <div className="profilePage">
+    user && (<div className="profilePage">
       <div className="details">
         <div className="wrapper">
           <div className="title">
@@ -61,7 +70,7 @@ function ProfilePage  () {
           <Chat/>
         </div>
       </div>
-    </div>
+    </div>)
   )
 }
 export default ProfilePage;
