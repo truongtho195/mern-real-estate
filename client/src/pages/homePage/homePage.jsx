@@ -14,7 +14,7 @@ export default function HomePage() {
                         Find Real Estate & Get Your Dream Place</h1>
                     <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis error quae, inventore quaerat repudiandae quo commodi quisquam maxime, eius sint qui ex sequi culpa expedita molestiae corporis accusantium vitae at.</p>
                     <SearchBar />
-                    {currentUser.username}
+                    
                     <div className='boxes text-xl font-semibold justify-between hidden'>
                         <div className='box'>
                             <h1>16+ </h1>

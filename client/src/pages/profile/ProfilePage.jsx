@@ -5,13 +5,15 @@ import { userData,listData } from "../../lib/dummydata.js";
 import CardItem from '../../components/cardItem/CardItem.jsx'
 import Chat from "../../components/chat/Chat.jsx";
 import apiRequest from './../../lib/apiRequest.js';
-import  AuthContext from './../../context/AuthContext.jsx';
+import  {AuthContext} from './../../context/AuthContext.jsx';
+import imgNoAvatar from './../../assets/images/noavatar.jpg';
 function ProfilePage  () {
   const [error,setError] = useState("");
-  const [updateUser] = useContext(AuthContext);
+
+  const {currentUser,updateUser} = useContext(AuthContext);
   const navigate = useNavigate();
     
-  const user = userData;
+  const user = currentUser;
   const logoutHandle= async ()=>{
     try {
       setError("");
@@ -34,8 +36,8 @@ function ProfilePage  () {
             <button>Update Profile</button>
           </div>
           <div className="info">
-            <span>Avatar : <img src={user.img} alt="" /></span>
-            <span>Username : <b>{user.name}</b></span>
+            <span>Avatar : <img src={user.avatar || imgNoAvatar } alt="" /></span>
+            <span>Username : <b>{user.username}</b></span>
             <span>Email : <b>{user.email}</b></span>
             <button className='btnLogout' onClick={logoutHandle}>Logout</button>
           </div>
@@ -62,5 +64,5 @@ function ProfilePage  () {
     </div>
   )
 }
+export default ProfilePage;
 
-export default ProfilePage

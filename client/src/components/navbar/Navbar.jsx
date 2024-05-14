@@ -4,10 +4,11 @@ import { Link } from "react-router-dom";
 import { userData } from "../../lib/dummydata.js";
 import "./Navbar.css";
 import { AuthContext } from "../../context/AuthContext.jsx";
+import imgNoAvatar from './../../assets/images/noavatar.jpg';
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
-    // const [currentUser] = useContext(AuthContext)
-    const user = userData;
+    const {currentUser} = useContext(AuthContext)
+    const user = currentUser;
     return (
         <nav>
             <div className="flex h-[60px]">
@@ -30,7 +31,7 @@ export default function Navbar() {
                 <div className="right">
                     {user ? (
                         <div className="user">
-                            <img src={user.avatar} alt="" />
+                            <img src={user.avatar || imgNoAvatar} alt="" />
                             <span>{user.username}</span>
                             <Link className="linkUser" to="/profile">
                                 <span className="notification"> 3</span>
@@ -41,8 +42,8 @@ export default function Navbar() {
                     ) : (
                         <>
                             <div className="gap-10 hidden sm:flex items-center">
-                                <a href="/">Sign in</a>
-                                <a href="/" className="bg-orange-300 px-3 py-2">
+                                <a href="/login">Sign in</a>
+                                <a href="/register" className="bg-orange-300 px-3 py-2">
                                     Sign up
                                 </a>
                             </div>

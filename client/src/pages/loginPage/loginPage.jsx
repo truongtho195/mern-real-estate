@@ -27,8 +27,10 @@ function loginPage() {
             updateUser(res.data)
             navigate("/profile")
         } catch (err) {
-            console.log(err);
-            setError(err.response.data.message);
+            //err.response.data.message
+            const errMsg =  err.message;
+            console.log(errMsg);
+            setError(errMsg);
         }finally{
             setIsLoading(false);
         }
