@@ -1,10 +1,2 @@
 mern_realestate_docker/mongodb_data/
-mern_realestate_docker/mongodb_data/collection-4-3858337080609548061.wt
-mern_realestate_docker/mongodb_data/index-5-3858337080609548061.wt
-mern_realestate_docker/mongodb_data/index-6-3858337080609548061.wt
-mern_realestate_docker/mongodb_data/sizeStorer.wt
-mern_realestate_docker/mongodb_data/WiredTiger.turtle
-mern_realestate_docker/mongodb_data/WiredTiger.wt
-mern_realestate_docker/mongodb_data/diagnostic.data/metrics.2024-05-10T03-22-47Z-00000
-mern_realestate_docker/mongodb_data/diagnostic.data/metrics.interim
-mern_realestate_docker/mongodb_data/journal/WiredTigerLog.0000000004
+
