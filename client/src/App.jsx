@@ -1,6 +1,6 @@
 import './App.css'
 // import Navbar from './components/navbar/Navbar.jsx'
-import Layout from './pages/layout/Layout.jsx';
+import {Layout,RequiredAuth} from './pages/layout/Layout.jsx';
 import HomePage from './pages/homePage/homePage.jsx'
 import ListPage from './pages/listPage/listPage.jsx';
 import SinglePage from './pages/singlePage/SinglePage.jsx';
@@ -27,10 +27,10 @@ function App() {
           path:"/singlePage",
           element:<SinglePage/>
         },
-        {
-          path:"/profile",
-          element:<ProfilePage/>
-        },
+        // {
+        //   path:"/profile",
+        //   element:<ProfilePage/>
+        // },
         {
           path:"/register",
           element:<RegisterPage/>
@@ -42,6 +42,16 @@ function App() {
 
     ],
     },
+    {
+      path:"/",
+      element:<RequiredAuth/>,
+      children:[
+        {
+          path:"/profile",
+          element:<ProfilePage/>
+        }
+      ]
+    }
     
   ]);
   return (

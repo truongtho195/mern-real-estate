@@ -11,11 +11,9 @@ function ProfilePage  () {
   const [error,setError] = useState("");
 
   const {currentUser,updateUser} = useContext(AuthContext);
-  const navigate = useNavigate();
-    
+  const navigate = useNavigate(); 
   const user = currentUser;
-  console.log('Current user');
-  console.log(currentUser);
+  
   useEffect(()=>{
     if(!currentUser)
       {
