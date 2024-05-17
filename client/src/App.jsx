@@ -7,6 +7,7 @@ import SinglePage from './pages/singlePage/SinglePage.jsx';
 import ProfilePage from './pages/profile/ProfilePage.jsx';
 import RegisterPage from './pages/registerPage/registerPage.jsx';
 import LoginPage from './pages/loginPage/loginPage.jsx';
+import ProfileUpdatePage from "./pages/profileUpdatePage/ProfileUpdatePage.jsx";
 import {createBrowserRouter,RouterProvider,} from 'react-router-dom';
 
 function App() {
@@ -49,7 +50,12 @@ function App() {
         {
           path:"/profile",
           element:<ProfilePage/>
+        },
+        {
+          path:"/profile/update",
+          element:<ProfileUpdatePage/>
         }
+        
       ]
     }
     
