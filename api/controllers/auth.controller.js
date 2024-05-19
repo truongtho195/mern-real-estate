@@ -54,7 +54,7 @@ export const login = async(req, res,next) => {
         if (!validUser) 
             return res.status(400).json({message:"User not found"});
 
-        console.log(`${username}, ${password} `);
+        
         //CHECK IF THE PASSWORD IS CORRECT
         const isValidPass=await bcrypt.compare(password, validUser.password);
         if(!isValidPass)  
@@ -66,7 +66,7 @@ export const login = async(req, res,next) => {
                                 isAdmin:false},
                     process.env.JWT_SECRET_KEY);
         
-        const {password:hashedPassword,_id,createdAt,updatedAt,...rest} = validUser._doc;
+        const {password:hashedPassword,createdAt,updatedAt,...rest} = validUser._doc;
         const expiredDate = new Date(Date.now()+36000000);
         console.log(`Expired Date : ${expiredDate}`)
         res.cookie("access_token",token,{httpOnly:true,expires:expiredDate})
