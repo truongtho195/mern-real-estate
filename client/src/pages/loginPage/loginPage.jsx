@@ -28,8 +28,9 @@ function loginPage() {
             navigate("/profile")
         } catch (err) {
             //err.response.data.message
-            const errMsg =  err.message;
-            console.log(errMsg);
+            // console.log(err);
+            const errMsg =  err.response.data.message || err.message;
+            // console.log(errMsg);
             setError(errMsg);
         }finally{
             setIsLoading(false);
