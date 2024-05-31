@@ -1,6 +1,6 @@
 import {useContext,useEffect,useState} from 'react'
 import "./ProfilePage.css"
-import { useNavigate } from 'react-router-dom';
+import { useNavigate ,Link} from 'react-router-dom';
 import { userData,listData } from "../../lib/dummydata.js";
 import CardItem from '../../components/cardItem/CardItem.jsx'
 import Chat from "../../components/chat/Chat.jsx";
@@ -55,7 +55,9 @@ function ProfilePage  () {
 
           <div className="title">
             <h1>My List</h1>
-            <button>Add New Post</button>
+            <Link to="/post/add">
+              <button> Add New Post</button>
+            </Link>
           </div>
           <div className="list">
             {
@@ -64,7 +66,6 @@ function ProfilePage  () {
               ))
             }
           </div>
-
         </div>
       </div>
       <div className="chatContainer">

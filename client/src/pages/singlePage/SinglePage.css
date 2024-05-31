@@ -40,7 +40,7 @@
     
         .features{
     
-            @apply flex basis-1/3 ;
+            @apply flex basis-1/3 bg-[#fcf5f3];
             .title {
                 @apply font-bold text-lg;
             }

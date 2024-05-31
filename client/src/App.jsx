@@ -8,7 +8,9 @@ import ProfilePage from './pages/profile/ProfilePage.jsx';
 import RegisterPage from './pages/registerPage/registerPage.jsx';
 import LoginPage from './pages/loginPage/loginPage.jsx';
 import ProfileUpdatePage from "./pages/profileUpdatePage/ProfileUpdatePage.jsx";
+import AddPostPage from './pages/addPostPage/AddPostPage.jsx';
 import {createBrowserRouter,RouterProvider,} from 'react-router-dom';
+import { singlePageLoader } from './lib/loaders.js';
 
 function App() {
   const router = createBrowserRouter([
@@ -25,8 +27,9 @@ function App() {
           element:<ListPage/>
         },
         {
-          path:"/singlePage",
-          element:<SinglePage/>
+          path:"/:id",
+          element:<SinglePage/>,
+          loader: singlePageLoader
         },
         // {
         //   path:"/profile",
@@ -54,7 +57,11 @@ function App() {
         {
           path:"/profile/update",
           element:<ProfileUpdatePage/>
-        }
+        },
+        {
+          path:"/post/add",
+          element:<AddPostPage/>
+        },
         
       ]
     }

@@ -1,4 +1,5 @@
 import React from 'react'
+import { useLoaderData } from 'react-router-dom'
 import Slider from '../../components/slider/Slider.jsx'
 import { singlePostData } from '../../lib/dummydata.js'
 import { userData } from '../../lib/dummydata.js'
@@ -11,32 +12,38 @@ import utilityImg from "../../assets/images/utility.png"
 import sizeImg from "../../assets/images/size.png"
 import bedImg from "../../assets/images/bed.png"
 import bathImg from "../../assets/images/bath.png"
+import DOMPurify from 'dompurify';
 import "./SinglePage.css"
 import FeatureItem from '../../components/featureItem/FeatureItem.jsx'
+
+const HtmlContent = ({htmlString})=>{
+  const cleanHtmlString = DOMPurify.sanitize(htmlString);
+  return <div dangerouslySetInnerHTML={{__html: cleanHtmlString}}></div>
+}
 const SinglePage = () => {
+  const post = useLoaderData();
   return (
     <div className="singlePage">
       <div className="details">
         <div className="wrapper">
-          <Slider images={singlePostData.images} />
+          <Slider images={post.images} />
           <div className="info">
             <div className="top">
               <div className="post">
-                <h1>{singlePostData.title}</h1>
+                <h1>{post.title}</h1>
                 <div className="address">
                   <img src={pinImg} alt="" />
-                  <span>{singlePostData.address}</span>
+                  <span>{post.address}</span>
                 </div>
-                <div className="price">$ {singlePostData.price}</div>
-
+                <div className="price">$ {post.price}</div>
               </div>
               <div className="user">
-                <img src={userData.img} alt="" />
-                <p>{userData.name}</p>
+                <img src={post.user.avatar} alt="" />
+                <p>{post.user.username}</p>
               </div>
             </div>
-            <div className="bottom">
-              <p>{singlePostData.description}</p>
+            <div className="bottom" >
+              <HtmlContent htmlString={post.postDetail.desc} />
             </div>
           </div>
         </div>
@@ -45,31 +52,37 @@ const SinglePage = () => {
         <div className="wrapper">
           <p className="title">General</p>
           <div className="listVertical">
-            <FeatureItem image={utilityImg} title="Utilities" description="Renter is responsible" />
-            <FeatureItem image={utilityImg} title="Pet Policy" description="Pets Allowed" />
-            <FeatureItem image={utilityImg} title="Property Fees" description="Must have 3x the rent in total household income" />
+            <FeatureItem 
+                  image={utilityImg} 
+                  title="Utilities" 
+                  description={`${ post.postDetail.utilities ==="owner"? "Owner is responsible" : "Tenat is responsible"}`} />
+            <FeatureItem 
+                image={utilityImg} 
+                title="Pet Policy" 
+                description={`${ post.postDetail.utilities ==="allowed"? "Pets Allowed" : "Pets not Allowed"}`} />
+            <FeatureItem 
+                image={utilityImg} 
+                title="Property Fees" 
+                description={`${ post.postDetail.income}`} />
           </div>
           <p className='title'>Room Sizes</p>
-
           <div className="listHorizontal">
             <div className="size">
               <img src={sizeImg} alt="" />
               <div className="featureText">
-                <span>80 sqft</span>
-                
+                <span>{post.postDetail.size} sqft</span>
               </div>
             </div>
             <div className="size">
               <img src={bedImg} alt="" />
               <div className="featureText">
-                <span>2 beds</span>
-                
+                <span>{post.bedroom} beds</span>
               </div>
             </div>
             <div className="size">
               <img src={bathImg} alt="" />
               <div className="featureText">
-                <span>1 Bathroom</span>
+                <span>{post.bathroom} Bathroom</span>
               </div>
             </div>
           </div>
@@ -77,17 +90,17 @@ const SinglePage = () => {
           <div className="listHorizontal bg-white">
             <FeatureItem image={utilityImg}
               title="School"
-              description="250 away" />
+              description={`${post.postDetail.school>999? post.postDetail.school/1000 +"km" : post.postDetail.school +"m" } away`} />
             <FeatureItem image={utilityImg}
               title="Bus stop"
-              description="100m away" />
+              description={`${post.postDetail.bus>999? post.postDetail.bus/1000 +"km" : post.postDetail.bus +"m" } away`} />
             <FeatureItem image={utilityImg}
               title="Restaurant"
-              description="200m away" />
+              description={`${post.postDetail.restaurant>999? post.postDetail.restaurant/1000 +"km" : post.postDetail.restaurant +"m" } away`}/>
           </div>
           <p className='title'>Location</p>
           <div className="mapContainer">
-            <Map items={[singlePostData]} zoom='13' />
+            <Map items={[post]} zoom='13' />
           </div>
           <div className="buttons">
             <button className='featureButton'>
