@@ -18,7 +18,6 @@ function Map({items,zoom=7}) {
                 data.map(item=>(
                     <Pin item={item} key={item.id} />
                 ))
-           
             }
         </MapContainer>
     )

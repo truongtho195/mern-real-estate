@@ -11,16 +11,49 @@ import { errorHandler } from "./../utils/error.js"
  * @param {*} res 
  */
 export const getPosts= async (req, res) => {
+    const {city,type,property,bedroom,minPrice,maxPrice,sortBy,order }= req.query;
+    let query ={};
     try {
+        // if(name){
+        //     query.name = {$regex: name, $options: "i"};// Tìm kiếm tên sản phẩm không phân biệt chữ hoa chữ thường
+        // }
         
-        const posts =  await Post.find()
+        if(city){
+            query.city = city;
+        }
+        if(type){
+            query.type = type;
+        }
+        if(property){
+            query.property = property;
+        }
+        if(bedroom){
+            query.bedroom = bedroom;
+        }
+        if(minPrice && maxPrice){
+            query.price = {$gte: minPrice, $lte: maxPrice};
+        }else if(minPrice){
+            query.price = {$gte:minPrice};
+        }else if(maxPrice){
+            query.price = {$lte:maxPrice};
+        }
+        let sortQuery ={};
+        if(sortBy){
+            sortQuery[sortBy] = order ==='desc' ? -1 : 1; // -1: giảm dần, 1: tăng dần
+        }
+
+        const posts =  await Post.find(query).sort(sortQuery)
         .populate('postDetail')
         .populate({
             path: 'user',
             select: '-_id -password -createdAt -updatedAt'
         }).lean();
-                
-        res.status(200).json(posts);
+        
+
+        setTimeout(() => {
+            res.status(200).json(posts);    
+        }, 3000);
+        
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: "Failed to get POSTs!" })

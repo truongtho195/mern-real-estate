@@ -13,6 +13,7 @@ import sizeImg from "../../assets/images/size.png"
 import bedImg from "../../assets/images/bed.png"
 import bathImg from "../../assets/images/bath.png"
 import DOMPurify from 'dompurify';
+
 import "./SinglePage.css"
 import FeatureItem from '../../components/featureItem/FeatureItem.jsx'
 
