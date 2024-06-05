@@ -3,6 +3,7 @@
         .details{
             @apply flex basis-2/3 pr-5;
             .wrapper{
+                @apply w-full;
                 .info{
                     @apply flex flex-col gap-5 pt-6;
                     .top{
@@ -74,7 +75,7 @@
             .buttons{
                 @apply flex justify-between;
                 .featureButton{
-                    @apply flex gap-2 border bg-white p-2 hover:bg-gray-200 text-sm;
+                    @apply flex gap-2 border p-2 hover:bg-gray-200 text-sm;
                     img{
                         @apply w-[20px] h-[20px] 
                     }
@@ -84,5 +85,5 @@
         }
     }
     
-   
+
 

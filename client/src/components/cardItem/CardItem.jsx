@@ -7,9 +7,9 @@ import saveImg from "../../assets/images/save.png";
 import pinImg from "../../assets/images/pin.png";
 import "./CardItem.css"
 function CardItem({item}) {
-  return (
+    return (
         <div className="card">
-            <Link to={`/${item.id}`} className='imageContainer'>
+            <Link to={`/${item._id}`} className='imageContainer'>
                 <img src={item.images} alt="" />
             </Link>
             <div className="textContainer">

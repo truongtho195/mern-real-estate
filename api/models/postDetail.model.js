@@ -24,8 +24,12 @@ const postDetailSchema = new mongoose.Schema({
     },
     restaurant: {
         type: Number,
-    }
-
+    },
+    // postId :{
+    //     type: mongoose.Schema.Types.String,
+    //     ref: 'Post',
+    //     required: true
+    // }
 
 }, {
     // _id: false,

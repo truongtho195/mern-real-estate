@@ -1,5 +1,5 @@
-import React from 'react'
-import { useLoaderData } from 'react-router-dom'
+import React, { useContext, useState } from 'react'
+import { redirect, useLoaderData } from 'react-router-dom'
 import Slider from '../../components/slider/Slider.jsx'
 import { singlePostData } from '../../lib/dummydata.js'
 import { userData } from '../../lib/dummydata.js'
@@ -12,17 +12,40 @@ import utilityImg from "../../assets/images/utility.png"
 import sizeImg from "../../assets/images/size.png"
 import bedImg from "../../assets/images/bed.png"
 import bathImg from "../../assets/images/bath.png"
+import apiRequest from '../../lib/apiRequest.js';
 import DOMPurify from 'dompurify';
 
 import "./SinglePage.css"
 import FeatureItem from '../../components/featureItem/FeatureItem.jsx'
+import { AuthContext } from '../../context/AuthContext.jsx'
 
-const HtmlContent = ({htmlString})=>{
+
+const HtmlContent = ({ htmlString }) => {
   const cleanHtmlString = DOMPurify.sanitize(htmlString);
-  return <div dangerouslySetInnerHTML={{__html: cleanHtmlString}}></div>
-}
+  return <div dangerouslySetInnerHTML={{ __html: cleanHtmlString }}></div>
+};
 const SinglePage = () => {
+  // const post =[];
   const post = useLoaderData();
+  
+  const [saved,setSaved] = useState(post.isSaved);
+  const {currentUser} = useContext(AuthContext)
+
+  const savedPostHandle = async () => {
+    try {
+
+      if(!currentUser)
+        redirect('/login');
+      setSaved((prev)=>!prev);
+      const res = await apiRequest.post(`/users/save`,{
+        postId:post._id
+      });
+
+    } catch (error) {
+      setSaved((prev)=>!prev);
+      console.log(error)
+    }
+  }
   return (
     <div className="singlePage">
       <div className="details">
@@ -53,18 +76,18 @@ const SinglePage = () => {
         <div className="wrapper">
           <p className="title">General</p>
           <div className="listVertical">
-            <FeatureItem 
-                  image={utilityImg} 
-                  title="Utilities" 
-                  description={`${ post.postDetail.utilities ==="owner"? "Owner is responsible" : "Tenat is responsible"}`} />
-            <FeatureItem 
-                image={utilityImg} 
-                title="Pet Policy" 
-                description={`${ post.postDetail.utilities ==="allowed"? "Pets Allowed" : "Pets not Allowed"}`} />
-            <FeatureItem 
-                image={utilityImg} 
-                title="Property Fees" 
-                description={`${ post.postDetail.income}`} />
+            <FeatureItem
+              image={utilityImg}
+              title="Utilities"
+              description={`${post.postDetail.utilities === "owner" ? "Owner is responsible" : "Tenat is responsible"}`} />
+            <FeatureItem
+              image={utilityImg}
+              title="Pet Policy"
+              description={`${post.postDetail.utilities === "allowed" ? "Pets Allowed" : "Pets not Allowed"}`} />
+            <FeatureItem
+              image={utilityImg}
+              title="Property Fees"
+              description={`${post.postDetail.income}`} />
           </div>
           <p className='title'>Room Sizes</p>
           <div className="listHorizontal">
@@ -91,13 +114,13 @@ const SinglePage = () => {
           <div className="listHorizontal bg-white">
             <FeatureItem image={utilityImg}
               title="School"
-              description={`${post.postDetail.school>999? post.postDetail.school/1000 +"km" : post.postDetail.school +"m" } away`} />
+              description={`${post.postDetail.school > 999 ? post.postDetail.school / 1000 + "km" : post.postDetail.school + "m"} away`} />
             <FeatureItem image={utilityImg}
               title="Bus stop"
-              description={`${post.postDetail.bus>999? post.postDetail.bus/1000 +"km" : post.postDetail.bus +"m" } away`} />
+              description={`${post.postDetail.bus > 999 ? post.postDetail.bus / 1000 + "km" : post.postDetail.bus + "m"} away`} />
             <FeatureItem image={utilityImg}
               title="Restaurant"
-              description={`${post.postDetail.restaurant>999? post.postDetail.restaurant/1000 +"km" : post.postDetail.restaurant +"m" } away`}/>
+              description={`${post.postDetail.restaurant > 999 ? post.postDetail.restaurant / 1000 + "km" : post.postDetail.restaurant + "m"} away`} />
           </div>
           <p className='title'>Location</p>
           <div className="mapContainer">
@@ -108,9 +131,9 @@ const SinglePage = () => {
               <img src={chatImg} alt="" />
               Send a Message
             </button>
-            <button className='featureButton'>
+            <button className={`featureButton ${saved?'bg-[#FFF6DC]':'bg-white'}`} onClick={savedPostHandle}>
               <img src={saveImg} alt="" />
-              Save the Place
+                {saved?'Place saved':'Save the Place'}
             </button>
           </div>
         </div>
