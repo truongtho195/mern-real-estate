@@ -27,7 +27,6 @@ function ProfilePage() {
     try {
       setError("");
       localStorage.removeItem("user");
-
       const res = await apiRequest.post("/auth/logout");
       updateUser(null);
       navigate("/")
@@ -54,7 +53,6 @@ function ProfilePage() {
             <span>Email : <b>{user.email}</b></span>
             <button className='btnLogout' onClick={logoutHandle}>Logout</button>
           </div>
-
           <div className="title">
             <h1>My List</h1>
             <Link to="/post/add">
@@ -71,13 +69,11 @@ function ProfilePage() {
                 {
                   (postResponse) =>
                     postResponse.data.userPosts.map(item => (
-                      <CardItem key={item.id} item={item} />
+                      <CardItem key={item._id} item={item} />
                     ))
                 }
               </Await>
             </Suspense>
-
-
             {/* {
               // listData.map(item => (
               //   <CardItem key={item.id} item={item} />
@@ -97,7 +93,7 @@ function ProfilePage() {
                   {
                     (postResponse) =>
                       postResponse.data.savedPost.map(item => (
-                        <CardItem key={item.id} item={item} />
+                        <CardItem key={item._id} item={item} />
                       ))
                   }
                 </Await>
@@ -108,12 +104,21 @@ function ProfilePage() {
               ))
             } */}
           </div>
-
         </div>
       </div>
       <div className="chatContainer">
         <div className="wrapper">
-          <Chat />
+          <Suspense fallback={<p>Loading ...</p>}>
+            <Await
+              resolve={data.chatResponse}
+              errorElement={
+                <p>Error loading package location!</p>
+              }>
+              {
+                (chatResponse) => <Chat chats={chatResponse.data}/>                  
+              }
+            </Await>
+          </Suspense>
         </div>
       </div>
     </div>)

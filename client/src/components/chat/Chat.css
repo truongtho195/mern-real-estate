@@ -6,7 +6,7 @@
     .messages{
         @apply flex flex-1 flex-col gap-2 overflow-y-scroll;
         .message{
-                @apply flex gap-2 items-center bg-white p-2 hover:bg-slate-100 cursor-pointer rounded-md;
+                @apply flex gap-2 items-center bg-white p-2 hover:bg-slate-100 cursor-pointer rounded-md h-[60px];
             
                 span{
                     @apply font-bold text-sm;
@@ -31,7 +31,7 @@
                 }} */
             }
         }
- 
+
 
     .chatBox{
         @apply flex-1 bg-white flex flex-col justify-between;
@@ -50,9 +50,9 @@
         .center{
             @apply flex flex-col px-4 h-[350px] overflow-scroll;
             .chatMessage{
-                @apply text-sm w-[50%] ;
+                @apply text-sm max-w-[70%] border rounded-lg p-2 mb-2 flex flex-col;
                 span{
-                    @apply bg-[#fff6dc] w-[max-content] text-[0.7rem] p-1 rounded-sm;
+                    @apply bg-[#fff6dc] w-[max-content] text-[0.7rem] p-1 rounded-sm ;
                 }
                 &.own{
                     @apply self-end text-end;
