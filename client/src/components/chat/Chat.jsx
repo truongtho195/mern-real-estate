@@ -1,16 +1,21 @@
-import { React, useContext, useState } from "react";
+import { React, useContext,useRef, useEffect, useState } from "react";
 import "./Chat.css";
 import { AuthContext } from "../../context/AuthContext";
 import apiRequest from "../../lib/apiRequest";
 import {format} from 'timeago.js'
+import { SocketContext } from "../../context/SocketContext";
+
 function Chat({ chats }) {
     const [chat, setChat] = useState(null);
     const { currentUser } = useContext(AuthContext);
+    const { socket} = useContext(SocketContext);
+
+    const messageEndRef = useRef()
     const handleOpenChat = async (id, receiver) => {
         try {
             const res = await apiRequest("/chats/" + id);
-
             setChat({ ...res.data, receiver });
+            console.log(`receiver :${receiver._id}`)
         } catch (error) {
             console.log(error);
         }
@@ -18,22 +23,59 @@ function Chat({ chats }) {
 
     const handleSubmit = async (e)=>{
         e.preventDefault();
-        console.log('call')
-        console.log(e.target)
         const formData = new FormData(e.target);
         const text = formData.get('text');
         if(!text) return ;
         try {
             const res = await apiRequest.post('/messages/'+chat._id,{text});
-            setChat((prev)=>({...prev,messages:[...prev.messages,res.data]}))
+            setChat((prev)=>({...prev,messages:[...prev.messages,res.data]}));
             e.target.reset();
+            console.log(`receiver :${chat.receiver._id}`)
+            socket.emit("sendMessage",{
+                receiverId:chat.receiver._id,
+                data:res.data
+            })
         } catch (error) {
             console.error(error);
         }
     }
+
+    useEffect(()=>{
+        messageEndRef.current?.scrollIntoView({behavior:"smooth"});
+    },[chat])
+
+    useEffect(()=>{
+        const read = async()=>{
+            try {
+                await apiRequest.put("/chats/read/"+chat._id);
+
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+
+        if(chat && socket){
+            socket.on("getMessage",(data)=>{ 
+                console.log(`chat._id :${chat._id} || data.chatId :${data.chatId}`)
+                if(chat._id ===data.chatId){
+                    setChat((prev)=>({...prev,messages:[...prev.messages,data]}));
+                    read();
+                }
+            })
+        }
+        return () => {
+            socket.off("getMessage");
+        };
+    },[socket,chat])
+    const testSocket=()=>{
+        console.log('socket call')
+        socket.emit("test","hi from client");
+    }
     return (
         <div className="chat">
             <h1>Messages</h1>
+            <button onClick={testSocket}>test socket {currentUser._id}</button>
             <div className="messages">
                 {chats?.map((c) => (
                     <div
@@ -51,6 +93,8 @@ function Chat({ chats }) {
                         />
                         <span>{c.receiver.username}</span>
                         <p>{c.lastMessage}</p>
+                        {/* <p>Receiver {c.receiver._id}</p>
+                        <p>Me {c.receiver._id}</p> */}
                         {/* <span className='deleteButton  '>X</span> */}
                     </div>
                 ))}
@@ -77,12 +121,13 @@ function Chat({ chats }) {
                         
                         {chat.messages?.map((message) => (
                             
-                            <div className={`chatMessage ${message.userId == currentUser._id ?'own':''}` } key={message._id}>
+                            <div className={`chatMessage ${message.userId == currentUser._id ?'':'own'}` } key={message._id}>
                                 
                                 <p>{message.text}</p>
                                 <span>{format(message.createdAt)}</span>
                             </div>
                         ))}
+                        <div ref={messageEndRef}></div>
                     </div>
                     <form onSubmit={handleSubmit} className="bottom">
                         <textarea name="text"></textarea>

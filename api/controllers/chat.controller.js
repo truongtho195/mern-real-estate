@@ -29,8 +29,11 @@ export const getChats = async (req, res) => {
         // for (const user of users) {
         //     userMap[user._id] = user;
         // }
+        
         for (let chat of chats) {
-            const receivedId = chat.users.find((id)=> id!==tokenUserId);   
+            
+            const receivedId = chat.users.find(user=>!user._id.equals(tokenUserId));   
+            console.log(`token Id : ${tokenUserId} || Receiver Id : ${receivedId}`)
             const receiver = await User.findOne({_id :receivedId}).select('_id username avatar');
             chat.receiver = receiver;
         }
@@ -44,8 +47,8 @@ export const getChats = async (req, res) => {
 export const getChat = async (req, res) => {
     const tokenUserId = req.userId;
     const chatId = req.params.id;
-    console.log(`user : ${tokenUserId}`)
-    console.log(`chat : ${chatId}`)
+    console.log(`(getChat) user : ${tokenUserId} || chat : ${chatId}`)
+    
     try {
         const chat = await Chat.findOne({
             _id : chatId,
@@ -90,11 +93,11 @@ export const addChat = async (req, res) => {
 
 export const readChat = async (req, res) => {
     const tokenUserId = req.userId;
-
+    console.log(`(readChat) ${req.params.id}`)
     try {
         const chat = await Chat.findByIdAndUpdate(
             {
-                id:req.params.id,
+                _id:req.params.id,
                 users :{$in:[tokenUserId]}
             },
             {
@@ -108,7 +111,7 @@ export const readChat = async (req, res) => {
 
         res.status(200).json(chat);
     } catch (error) {
-        console.log(err);
+        console.log(error);
         res.status(500).json({ message: "Failed to get chats!" })
     }
 }

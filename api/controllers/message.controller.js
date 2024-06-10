@@ -23,7 +23,7 @@ export const addMessage = async (req, res) => {
 
         const newMessage = Message({
             text,
-            chat: chatId,
+            chatId: chatId,
             userId: tokenUserId
         });
 
