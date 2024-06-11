@@ -14,7 +14,6 @@ export const addMessage = async (req, res) => {
         const chatId = req.params.chatId;
 
         const text = req.body.text;
-        console.log(`TokenUserId:${tokenUserId} | ChatId:${chatId} | Text :${text}`);
         const chat = await Chat.findOne({
             _id: chatId,
             users: { $in: [tokenUserId] }

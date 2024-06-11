@@ -5,7 +5,8 @@ import {
     updateUser, 
     deleteUser, 
     savedPost,
-    profilePosts } from "../controllers/user.controller.js";
+    profilePosts,
+    getNotificationNumber } from "../controllers/user.controller.js";
 import { verifyToken } from "./../middleware/verifyToken.js";
 const router = express.Router();
 
@@ -15,5 +16,6 @@ router.put("/:id",verifyToken,updateUser)
 router.delete("/:id",deleteUser)
 router.post("/save",verifyToken,savedPost)
 router.get("/profilePosts",verifyToken,profilePosts)
+router.get("/notification",verifyToken,getNotificationNumber)
 
 export default router;

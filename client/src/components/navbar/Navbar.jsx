@@ -2,13 +2,19 @@ import { useContext, useState } from "react";
 import Logo from "../../assets/images/logo.png";
 import { Link } from "react-router-dom";
 import { userData } from "../../lib/dummydata.js";
+import {useNotificationStore} from  "../../lib/notificationStore.js"
 import "./Navbar.css";
 import { AuthContext } from "../../context/AuthContext.jsx";
 import imgNoAvatar from './../../assets/images/noavatar.jpg';
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
     const {currentUser} = useContext(AuthContext)
+    const fetch = useNotificationStore((state)=>state.fetch);
+    const number = useNotificationStore((state)=>state.number)
+    
     const user = currentUser;
+
+    if(currentUser)    fetch();
     return (
         <nav>
             <div className="flex h-[60px]">
@@ -34,8 +40,8 @@ export default function Navbar() {
                             <img src={user.avatar || imgNoAvatar} alt="" />
                             <span>{user.username}</span>
                             <Link className="linkUser" to="/profile">
-                                <span className="notification"> 3</span>
-                                Profile
+                                {number>0 && <div className="notification"> {number}</div>}
+                                <span>Profiles</span>
                             </Link>
 
                         </div>

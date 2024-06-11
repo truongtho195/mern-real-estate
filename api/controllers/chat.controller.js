@@ -33,7 +33,7 @@ export const getChats = async (req, res) => {
         for (let chat of chats) {
             
             const receivedId = chat.users.find(user=>!user._id.equals(tokenUserId));   
-            console.log(`token Id : ${tokenUserId} || Receiver Id : ${receivedId}`)
+
             const receiver = await User.findOne({_id :receivedId}).select('_id username avatar');
             chat.receiver = receiver;
         }
@@ -101,8 +101,8 @@ export const readChat = async (req, res) => {
                 users :{$in:[tokenUserId]}
             },
             {
-                $set: {
-                    seenBy:[tokenUserId]
+                $push: {
+                    seenBy:tokenUserId
                 },
             },
             {

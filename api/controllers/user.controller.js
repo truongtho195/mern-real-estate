@@ -4,6 +4,12 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { errorHandler } from "./../utils/error.js"
 import Post from '../models/post.model.js';
+import Chat from '../models/chat.model.js'
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ */
 export const getUsers = async (req, res) => {
     try {
         // const excludeFields = ['password', 'createdAt', 'updatedAt'];
@@ -13,13 +19,17 @@ export const getUsers = async (req, res) => {
         const users = await User.find();
         res.status(200).json(users);
     } catch (error) {
-        console.log(err);
+        console.log(error);
         res.status(500).json({ message: "Failed to get user!" })
     }
 }
-/*
-
-*/
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ * @returns 
+ */
 export const updateUser = async (req, res, next) => {
     try {
 
@@ -63,9 +73,13 @@ export const updateUser = async (req, res, next) => {
     }
 }
 
-/*
-
-*/
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ * @returns 
+ */
 export const getUserById = async (req, res,next) => {
     try {
         const userId = req.params.id;
@@ -82,9 +96,12 @@ export const getUserById = async (req, res,next) => {
     }
 }
 
-/*
-
-*/
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * @returns 
+ */
 export const deleteUser = async (req, res) => {
     try {
         const userId = req.params.id;
@@ -103,7 +120,11 @@ export const deleteUser = async (req, res) => {
 }
 
 
-
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ */
 export const savedPost = async (req, res) => {
     try {
         const postId = req.body.postId;
@@ -134,6 +155,12 @@ export const savedPost = async (req, res) => {
     }
 }
 
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
 export const profilePosts = async(req,res,next)=>{
     const tokenUserId = req.userId
     try {
@@ -144,5 +171,27 @@ export const profilePosts = async(req,res,next)=>{
     } catch (error) {
         console.log(error);
         res.status(500).json({message:"Failed to get profile posts!!"})
+    }
+}
+
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ */
+export const getNotificationNumber = async (req, res) => {
+    const tokenUserId = req.userId;
+    console.log(`(getNotificationNumber) tokenUserId : ${tokenUserId}`)
+    try {
+        const totalMessage = await Chat.countDocuments({
+            users: {$in:[tokenUserId]},
+            seenBy:{$ne:[tokenUserId]}
+        })
+        console.log(`Total Chat:${totalMessage}`);
+
+        res.status(200).json(totalMessage);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Failed to get notification!" })
     }
 }
