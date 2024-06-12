@@ -10,18 +10,25 @@ import chatRoute from "./routes/chat.route.js"
 import messageRoute from "./routes/message.route.js"
 import testRoute from "./routes/test.route.js"
 import Database from "./config/database.js"
+import path from 'path';
+
+import { fileURLToPath } from 'url';
+import appConfig from "./config/appconfig.js";
 const app = express();
 configDotenv()
 app.use(express.json());
 app.use(cookieParser())
 
-const port = process.env.PORT || 8800;
-const hostname = process.env.HOST_NAME || "localhost";
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(cors({origin:process.env.CLIENT_URL,credentials :true}));
+// Middleware để phục vụ các tệp tĩnh, client có thể truy cập dc vào thư mục upload
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use("/api/auth",authRoute);
 app.use("/api/posts",postRoute);
 app.use("/api/users",userRoute);
@@ -30,16 +37,13 @@ app.use("/api/messages",messageRoute);
 app.use("/test",testRoute);
 
 
-// app.listen(8800,()=>{
-//     console.log('Server is running at http://localhost:8800/');
-// })
 
 ( async()=>{
     try {
         //test connection
         await Database.connect(process.env.DATABASE_URL);     
-        app.listen(port,hostname,()=>{
-            console.log(`Sever is running at http://${hostname}:${port}`)
+        app.listen(appConfig.port,appConfig.hostname,()=>{
+            console.log(`Sever is running at http://${appConfig.hostname}:${appConfig.port}`)
         })
     } catch (error) {
         console.log ("Error Connect to DB :", error);

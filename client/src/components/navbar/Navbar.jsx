@@ -6,6 +6,7 @@ import {useNotificationStore} from  "../../lib/notificationStore.js"
 import "./Navbar.css";
 import { AuthContext } from "../../context/AuthContext.jsx";
 import imgNoAvatar from './../../assets/images/noavatar.jpg';
+import { checkAvatarUrl } from "../../utils/checkAvatarUrl.js";
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
     const {currentUser} = useContext(AuthContext)
@@ -14,7 +15,7 @@ export default function Navbar() {
     
     const user = currentUser;
 
-    if(currentUser)    fetch();
+    if(currentUser) fetch();
     return (
         <nav>
             <div className="flex h-[60px]">
@@ -37,7 +38,7 @@ export default function Navbar() {
                 <div className="right">
                     {user ? (
                         <div className="user">
-                            <img src={user.avatar || imgNoAvatar} alt="" />
+                            <img src={checkAvatarUrl(user.avatar,) || imgNoAvatar} alt="" />
                             <span>{user.username}</span>
                             <Link className="linkUser" to="/profile">
                                 {number>0 && <div className="notification"> {number}</div>}

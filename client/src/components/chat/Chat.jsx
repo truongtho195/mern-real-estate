@@ -5,6 +5,7 @@ import apiRequest from "../../lib/apiRequest";
 import {format} from 'timeago.js'
 import { SocketContext } from "../../context/SocketContext";
 import {useNotificationStore} from  "../../lib/notificationStore.js"
+import { checkAvatarUrl } from "../../utils/checkAvatarUrl.js";
 function Chat({ chats }) {
     const [chat, setChat] = useState(null);
     const { currentUser } = useContext(AuthContext);
@@ -90,7 +91,7 @@ function Chat({ chats }) {
                     >
                         <img
                             src={
-                                c.receiver.avatar ||
+                                checkAvatarUrl(c.receiver.avatar) ||
                                 "https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
                             }
                             alt=""

@@ -3,6 +3,8 @@ import User from '../models/user.model.js'
 
 import mongoose from "mongoose";
 import  jwt  from "jsonwebtoken";
+import { checkAvatarUrl } from '../lib/utils.js';
+import appConfig from '../config/appconfig.js';
 export const test = async (req, res) => {
     try {
         // // Kiểm tra kết nối bằng cách truy vấn một bảng/collectio nào đó
@@ -67,11 +69,12 @@ export const login = async(req, res,next) => {
                     process.env.JWT_SECRET_KEY);
         
         const {password:hashedPassword,createdAt,updatedAt,...rest} = validUser._doc;
+
         const expiredDate = new Date(Date.now()+36000000);
         console.log(`Expired Date : ${expiredDate}`)
         res.cookie("access_token",token,{httpOnly:true,expires:expiredDate})
                 .status(200)
-                .json(rest);
+                .json({...rest,avatar:checkAvatarUrl(rest.avatar,appConfig.domain)});
 
     } catch (error) {
         // next(error);

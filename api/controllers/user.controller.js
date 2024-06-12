@@ -5,6 +5,8 @@ import jwt from "jsonwebtoken";
 import { errorHandler } from "./../utils/error.js"
 import Post from '../models/post.model.js';
 import Chat from '../models/chat.model.js'
+import { checkAvatarUrl } from '../lib/utils.js';
+import appConfig from '../config/appconfig.js';
 /**
  * 
  * @param {*} req 
@@ -35,17 +37,18 @@ export const updateUser = async (req, res, next) => {
 
         const userId = req.params.id;
         const tokenUserId = req.userId;
-
+        
         if (tokenUserId !== userId) {
             return next(errorHandler(403, "Not authorized!"));
         }
         let updateData = {
             username: req.body.username,
             email: req.body.email,
-            avatar: req.body.avatar
+            // avatar: req.body.avatar
 
         }
-        const { avatar } = req.body;
+        const avatar = req.file?req.file.path:null;
+        console.log(` (UserController) Avatar: ${avatar}`);
 
         let updatedPassword = null;
         if (req.body.password) {
@@ -89,7 +92,7 @@ export const getUserById = async (req, res,next) => {
             return next(errorHandler(403, "Not authorized!"));
         }
         const user = await User.findById(userId)
-        res.status(200).json(user);
+        res.status(200).json({...user,avatar:checkAvatarUrl(avatar,appConfig.domain)});
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: "Failed to get user!" })
